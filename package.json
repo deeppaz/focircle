@@ -1,0 +1,33 @@
+{
+  "name": "kivikun",
+  "version": "1.0.0",
+  "description": "kivikun is tumblr and twitter post bot, kivikun is working with twit in twitter side, working with tumblr.js in tumblr side",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/deeppaz/kivikun.git"
+  },
+  "keywords": [
+    "tumblr",
+    "twitter",
+    "tumblrbot",
+    "twitterbot",
+    "bot",
+    "twit",
+    "tumblr.js"
+  ],
+  "author": "pure a.k.a deeppaz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/deeppaz/kivikun/issues"
+  },
+  "homepage": "https://github.com/deeppaz/kivikun#readme",
+  "dependencies": {
+    "fs": "0.0.1-security",
+    "tumblrwks": "^0.3.0",
+    "twit": "^2.2.11"
+  }
+}
