@@ -1,30 +1,28 @@
 {
-  "name": "kivikun",
+  "name": "focircle",
   "version": "1.0.0",
-  "description": "kivikun is tumblr and twitter post bot, kivikun is working with twit in twitter side, working with tumblr.js in tumblr side",
+  "description": "fo(tograf)circle is a bot that posts fotografs to tumblr, twitter",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/deeppaz/kivikun.git"
+    "url": "git+https://github.com/deeppaz/focircle.git"
   },
   "keywords": [
+    "focircle",
     "tumblr",
     "twitter",
-    "tumblrbot",
     "twitterbot",
-    "bot",
-    "twit",
-    "tumblr.js"
+    "tumblrbot"
   ],
   "author": "pure a.k.a deeppaz",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/deeppaz/kivikun/issues"
+    "url": "https://github.com/deeppaz/focircle/issues"
   },
-  "homepage": "https://github.com/deeppaz/kivikun#readme",
+  "homepage": "https://github.com/deeppaz/focircle#readme",
   "dependencies": {
     "fs": "0.0.1-security",
     "tumblrwks": "^0.3.0",
