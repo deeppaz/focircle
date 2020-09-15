@@ -1,3 +1,6 @@
-var hello = "hello world"
+const Twit = require('twit');
+const Tumblr = require('tumblrwks');
+const fs = require('fs');
 
-console.log(hello);
+//datas
+var DATAS = require()
