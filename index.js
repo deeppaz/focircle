@@ -34,10 +34,10 @@ function timer() {
 }
 
 function summon() {
-    var vapourImg = pick(fs.readdirSync(DATAs));
+    var tituDATAs = pick(fs.readdirSync(DATAs));
 
-    twitter(vapourImg);
-    tumblr(vapourImg);
+    twitter(tituDATAs);
+    tumblr(tituDATAs);
 };
 
 //POST THE IMAGE ON TWITTER
