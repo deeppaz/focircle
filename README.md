@@ -9,7 +9,6 @@
   <img src="https://64.media.tumblr.com/dd644ec82ce55f7db8315e2b142a4836/c5732907666409b4-c4/s2048x3072/23db70b3838c25fe985af7ec80f20c8d9e3c672f.png" width="150" />
 </p>
 <p align="center">focircle is a bot that posts fotografs to tumblr, twitter...</p>
-```
     <h1 style="font-family: 'IBM Plex Sans', sans-serif;
     font-size: 28px;
     line-height: 1.5em;
@@ -27,7 +26,6 @@
         this word is a compound of the ancient greek phôs, phōt- φῶς, φωτ- "light" and the ancient Greek graphē γραφη
         "writing, record". circle is that we know :)
     </p>
-```
     <br/>
     <br/>
     <h1 style="font-family: 'IBM Plex Sans', sans-serif;
