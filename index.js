@@ -69,7 +69,7 @@ function twitter(image) {
             var now = getDateTime()
             console.log('posted ' + now + ": " + data.text);
             // MOVE IMAGE TO ANOTHER FOLDER AS
-            fs.renameSync(DATAs + "/" + image, DATAs + "/seen/" + image);
+            fs.renameSync(DATAs + "/" + image, DATAs + "/postedbefore/" + image);
         }
     };
 };
