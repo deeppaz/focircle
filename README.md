@@ -57,25 +57,6 @@
 [tumblr](https://focircle.tumblr.com/)
 [instagram](https://www.instagram.com/focircle/)
 
-
-# how to clone project
-
-
-- Download by ZIP
-
-you can download by [ZIP](https://github.com/deeppaz/focircle/archive/master.zip)
-
-- or clone this repo
-
-```
-git clone https://github.com/deeppaz/focircle.git
-```
-```
-cd focircle
-npm install
-npm start
-```
-
 <br>
 <br>
 <br>
