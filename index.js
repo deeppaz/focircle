@@ -1,7 +1,7 @@
 var Twit = require('twit');
 var Tumblr = require('tumblrwks');
 var fs = require('fs');
-var vapoursPath = "./data/theleoisallinthemind.tumblr.com"
+var DATAs = "./data/theleoisallinthemind.tumblr.com"
 
 var TwitterAPIs = require('./config/twitterApi');
 var TumblrAPIs = require('./config/tumblrApi');
@@ -34,7 +34,7 @@ function timer() {
 }
 
 function summon() {
-    var vapourImg = pick(fs.readdirSync(vapoursPath));
+    var vapourImg = pick(fs.readdirSync(DATAs));
 
     twitter(vapourImg);
     tumblr(vapourImg);
@@ -52,7 +52,7 @@ function twitter(image) {
     );
 
     var vapourName = 'post ' + image.slice(0, -4) + ' / #focircle';
-    var b64content = fs.readFileSync(vapoursPath + '/' + image, { encoding: 'base64' })
+    var b64content = fs.readFileSync(DATAs + '/' + image, { encoding: 'base64' })
 
     T.post('media/upload', { media_data: b64content }, uploaded);
 
@@ -69,7 +69,7 @@ function twitter(image) {
             var now = getDateTime()
             console.log('posted ' + now + ": " + data.text);
             // MOVE IMAGE TO ANOTHER FOLDER AS
-            fs.rename(vapoursPath + "/" + image, vapoursPath + "/seen/" + image);
+            fs.rename(DATAs + "/" + image, DATAs + "/seen/" + image);
         }
     };
 };
@@ -87,7 +87,7 @@ function tumblr(image) {
         }, "focircle.tumblr.com"
     );
 
-    var photo = fs.readFileSync(vapoursPath + '/' + image);
+    var photo = fs.readFileSync(DATAs + '/' + image);
     var vapourName = 'vapour ' + image.slice(0, -4) + '—';
 
     //POST IMAGE AND THEN ADD CAPTION+TAGS
