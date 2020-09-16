@@ -5,6 +5,8 @@ var vapoursPath = "./data/theleoisallinthemind.tumblr.com"
 
 require('dotenv').config()
 
+var TwitterAPIs = require('./config/twitterApi');
+var TumblrAPIs = require('./config/tumblrApi');
 
 //CLEAR TERMINAL
 process.stdout.write('\x1B[2J\x1B[0f');
@@ -44,10 +46,10 @@ function summon() {
 function twitter(image) {
     var T = new Twit(
         {
-            consumer_key: process.env.TWITTER_CONSUMER_KEY,
-            consumer_secret: process.env.TWITTER_CONSUMER_SKEY,
-            access_token: process.env.TWITTER_ACCESS_TOKEN,
-            access_token_secret: process.env.TWITTER_ACCESS_STOKEN
+            consumer_key: TwitterAPIs.TWITTER_CONSUMER_KEY,
+            consumer_secret: TwitterAPIs.TWITTER_CONSUMER_SKEY,
+            access_token: TwitterAPIs.TWITTER_ACCESS_TOKEN,
+            access_token_secret: TwitterAPIs.TWITTER_ACCESS_STOKEN,
         }
     );
 
@@ -80,10 +82,10 @@ function tumblr(image) {
 
     var tumblr = new Tumblr(
         {
-            consumerKey: process.env.TUMBLR_CONSUMER_KEY,
-            consumerSecret: process.env.TUMBLR_CONSUMER_SKEY,
-            accessToken: process.env.TUMBLR_ACCESS_TOKEN,
-            accessSecret: process.env.TUMBLR_ACCESS_STOKEN
+            consumerKey: TumblrAPIs.TUMBLR_CONSUMER_KEY,
+            consumerSecret: TumblrAPIs.TUMBLR_CONSUMER_SKEY,
+            accessToken: TumblrAPIs.TUMBLR_ACCESS_TOKEN,
+            accessSecret: TumblrAPIs.TUMBLR_ACCESS_STOKEN
         }, "focircle.tumblr.com"
     );
 
