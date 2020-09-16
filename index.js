@@ -51,14 +51,14 @@ function twitter(image) {
         }
     );
 
-    var vapourName = 'post ' + image.slice(0, -4) + ' / #focircle';
+    var tituName = 'post ' + image.slice(0, -4) + ' / #focircle';
     var b64content = fs.readFileSync(DATAs + '/' + image, { encoding: 'base64' })
 
     T.post('media/upload', { media_data: b64content }, uploaded);
 
     function uploaded(err, data, response) {
         var mediaIdStr = data.media_id_string;
-        var params = { status: vapourName, media_ids: [mediaIdStr] }
+        var params = { status: tituName, media_ids: [mediaIdStr] }
         T.post('statuses/update', params, tweeted);
     };
 
@@ -69,7 +69,7 @@ function twitter(image) {
             var now = getDateTime()
             console.log('posted ' + now + ": " + data.text);
             // MOVE IMAGE TO ANOTHER FOLDER AS
-            fs.rename(DATAs + "/" + image, DATAs + "/seen/" + image);
+            fs.renameSync(DATAs + "/" + image, DATAs + "/seen/" + image);
         }
     };
 };
@@ -88,12 +88,12 @@ function tumblr(image) {
     );
 
     var photo = fs.readFileSync(DATAs + '/' + image);
-    var vapourName = 'vapour ' + image.slice(0, -4) + '—';
+    var tituName = 'focircle ' + image.slice(0, -4) + '—';
 
     //POST IMAGE AND THEN ADD CAPTION+TAGS
     tumblr.post('/post', { type: 'photo', data: [photo] }, function (err, json) {
         var blog_id = json.id;
-        tumblr.post('/post/edit', { id: blog_id, caption: vapourName, tags: 'vapour,veil,mist,vapours,art,visualart,abstract,abstractart,abstractartist,generative,generativeart,fractal,fractalart,procgen,glitch,glitchart,modern,modernart,render,everyday,daily,terragen,aftereffects,dailyrender,digitalart' }, function (err, json) {
+        tumblr.post('/post/edit', { id: blog_id, caption: tituName, tags: 'focircle,veil,mist,vapours,art,visualart,abstract,abstractart,abstractartist,generative,generativeart,fractal,fractalart,procgen,glitch,glitchart,modern,modernart,render,everyday,daily,terragen,aftereffects,dailyrender,digitalart' }, function (err, json) {
             console.log(json);
         });
     });
