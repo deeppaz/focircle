@@ -6,7 +6,7 @@
 </p>
 
 <p align="center">
-  <img src="https://64.media.tumblr.com/dd644ec82ce55f7db8315e2b142a4836/c5732907666409b4-c4/s2048x3072/23db70b3838c25fe985af7ec80f20c8d9e3c672f.png" width="150" />
+  <img src="https://64.media.tumblr.com/dd644ec82ce55f7db8315e2b142a4836/c5732907666409b4-c4/s2048x3072/23db70b3838c25fe985af7ec80f20c8d9e3c672f.png" width="350" />
 </p>
 <p align="center">focircle is a bot that posts fotografs to tumblr, twitter...</p>
     <h1 style="font-family: 'IBM Plex Sans', sans-serif;
@@ -87,5 +87,5 @@ npm start
 
 <p align="center">focircle <a href="https://github.com/deeppaz/serenes/blob/master/LICENSE">is MIT licensed</a></p>
 <p align="center">
-  <img src="https://64.media.tumblr.com/dd644ec82ce55f7db8315e2b142a4836/c5732907666409b4-c4/s2048x3072/23db70b3838c25fe985af7ec80f20c8d9e3c672f.png" width="35" />
+  <img src="https://64.media.tumblr.com/dd644ec82ce55f7db8315e2b142a4836/c5732907666409b4-c4/s2048x3072/23db70b3838c25fe985af7ec80f20c8d9e3c672f.png" width="150" />
 </p>
