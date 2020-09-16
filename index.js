@@ -3,8 +3,6 @@ var Tumblr = require('tumblrwks');
 var fs = require('fs');
 var vapoursPath = "./data/theleoisallinthemind.tumblr.com"
 
-require('dotenv').config()
-
 var TwitterAPIs = require('./config/twitterApi');
 var TumblrAPIs = require('./config/tumblrApi');
 
