@@ -1,7 +1,6 @@
 <p align="center">
   <img  src="http://img.shields.io/travis/badges/badgerbadgerbadger.svg?style=flat-square" alt="Build Status" />
   <img  src="https://img.shields.io/badge/dependencies-up%20to%20date-brightgreen" alt="Dependency Status" />
-  <img  src="https://img.shields.io/badge/application-music_player-blue" alt="Application Type" />
   <img  src="https://img.shields.io/github/license/Naereen/StrapDown.js.svg" alt="MIT Licence" />
 </p>
 
