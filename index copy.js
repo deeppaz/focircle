@@ -8,7 +8,7 @@ var TumblrAPIs = require('./config/tumblrApi');
 
 //CLEAR TERMINAL
 process.stdout.write('\x1B[2J\x1B[0f');
-console.log("focircle getting ready...")
+console.log("summoning...")
 
 //SET START TIME FROM CLI
 var myArgs = process.argv.slice(2);
@@ -30,6 +30,7 @@ setTimeout(function () { timer() }, midnight);
 function timer() {
     summon();
     setInterval(summon, 60 * 60 * 1000 * 3);
+    // setInterval(summon, 1000); //FOR TESTING
 }
 
 function summon() {
@@ -66,7 +67,7 @@ function twitter(image) {
             console.log(err);
         } else {
             var now = getDateTime()
-            console.log('posted to twitter: ' + now + ": " + data.text);
+            console.log('posted ' + now + ": " + data.text);
             // MOVE IMAGE TO ANOTHER FOLDER AS
             fs.renameSync(DATAs + "/" + image, DATAs + "/postedbefore/" + image);
         }
@@ -86,21 +87,16 @@ function tumblr(image) {
         }, "focircle.tumblr.com"
     );
 
-    var photo = fs.readFileSync(DATAs + '/' + image);
+    var photo = fs.readFileSync(DATAs + '/' + image, { encoding: 'base64' });
     var tituName = 'focircle ' + image.slice(0, -4) + '—';
 
     //POST IMAGE AND THEN ADD CAPTION+TAGS
-    tumblr.post('/post', { type: 'photo', data: [photo] }, postedWT);
-
-    function postedWT(err, json) {
-        var mpost_id = json.id_string
-        tumblr.post('/post/edit/', { id: mpost_id, caption: tituName, tags: 'focircle,veil,mist,art,visualart,abstract,abstractart,abstractartist,generative,generativeart,fractal,fractalart,procgen,glitch,glitchart,modern,modernart,render,everyday,daily,terragen,aftereffects,dailyrender,digitalart' }, postedMessage);
-    }
-
-    function postedMessage(err, json) {
-        var now = getDateTime()
-        console.log('posted to tumblr: ' + now + " : " + " postid: " + JSON.stringify(json) + " / " + toString(json.short_url));
-    };
+    tumblr.post('/post', { type: 'photo', data: [photo] }, function (err, json) {
+        var blog_id = json.id;
+        tumblr.post('/post/edit', { id: blog_id, caption: tituName, tags: 'focircle,veil,mist,vapours,art,visualart,abstract,abstractart,abstractartist,generative,generativeart,fractal,fractalart,procgen,glitch,glitchart,modern,modernart,render,everyday,daily,terragen,aftereffects,dailyrender,digitalart' }, function (err, json) {
+            console.log(json);
+        });
+    });
 }
 
 
