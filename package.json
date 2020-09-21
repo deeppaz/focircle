@@ -27,6 +27,7 @@
   "dependencies": {
     "dotenv": "^8.2.0",
     "fs": "0.0.1-security",
+    "fs-extra": "^9.0.1",
     "tumblrwks": "^0.3.0",
     "twit": "^2.2.11"
   }
