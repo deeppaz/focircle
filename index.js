@@ -36,7 +36,7 @@ setTimeout(function () { timer() }, midnight);
 //REPEAT EVERY 3 HOURS FROM START TIME
 function timer() {
     summon();
-    setInterval(summon, 60 * 60 * 1000 * 3);
+    setInterval(summon, 3 * 3 * 1000 * 3);
 }
 
 function summon() {
@@ -45,7 +45,6 @@ function summon() {
     twitter(tituDATAs);
     tumblr(tituDATAs);
 };
-
 
 
 //POST THE IMAGE ON TWITTER
@@ -87,6 +86,7 @@ function twitter(image) {
 async function tumblr(image) {
     var currentPost = readyToPost.pop();
     console.log("Current:" + JSON.stringify(currentPost.photo_url_1280));
+    console.log("Tags:" + JSON.parse(JSON.stringify(currentPost.tags.toString())));
     posted.push(currentPost);
 
     var tumblr = new Tumblr(
@@ -103,8 +103,7 @@ async function tumblr(image) {
     imageDownloader({
         imgs: [
             {
-                uri: myimage,
-
+                uri: myimage
             }
         ],
         dest: './data/testdata', //destination folder
@@ -120,7 +119,7 @@ async function tumblr(image) {
             function postedWT(err, json) {
                 console.log("CurrentPost : " + err);
                 var mpost_id = json.id_string
-                tumblr.post('/post/edit/', { id: mpost_id, caption: currentPost.photo_caption, tags: 'focircle,veil,mist,art,visualart,abstract,abstractart,abstractartist,generative,generativeart,fractal,fractalart,procgen,glitch,glitchart,modern,modernart,render,everyday,daily,terragen,aftereffects,dailyrender,digitalart' }, postedMessage);
+                tumblr.post('/post/edit/', { id: mpost_id, caption: currentPost.photo_caption, tags: JSON.parse(JSON.stringify(currentPost.tags.toString())) }, postedMessage);
             }
 
             function postedMessage(err, json) {
