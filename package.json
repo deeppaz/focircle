@@ -28,7 +28,11 @@
     "dotenv": "^8.2.0",
     "fs": "0.0.1-security",
     "fs-extra": "^9.0.1",
+    "node-fetch": "^2.6.1",
+    "node-fixtures": "0.0.1",
+    "node-image-downloader": "^1.0.7",
     "tumblrwks": "^0.3.0",
-    "twit": "^2.2.11"
+    "twit": "^2.2.11",
+    "uuid": "^8.3.0"
   }
 }

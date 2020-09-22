@@ -2,9 +2,14 @@ var Twit = require('twit');
 var Tumblr = require('tumblrwks');
 var fs = require('fs');
 var DATAs = "./data/theleoisallinthemind.tumblr.com"
+var fetch = require('node-fetch');
+
+const imageDownloader = require('node-image-downloader')
 
 var TwitterAPIs = require('./config/twitterApi');
 var TumblrAPIs = require('./config/tumblrApi');
+const postData = require('./data/minimalwhite');
+
 
 //CLEAR TERMINAL
 process.stdout.write('\x1B[2J\x1B[0f');
@@ -24,6 +29,8 @@ if (midnight < 0) {
     midnight += 86400000;
 }
 
+var posted = [];
+var readyToPost = postData.posts;
 setTimeout(function () { timer() }, midnight);
 
 //REPEAT EVERY 3 HOURS FROM START TIME
@@ -38,6 +45,8 @@ function summon() {
     twitter(tituDATAs);
     tumblr(tituDATAs);
 };
+
+
 
 //POST THE IMAGE ON TWITTER
 function twitter(image) {
@@ -75,7 +84,10 @@ function twitter(image) {
 
 
 // POST THE IMAGE ON TUMBLR
-function tumblr(image) {
+async function tumblr(image) {
+    var currentPost = readyToPost.pop();
+    console.log("Current:" + JSON.stringify(currentPost.photo_url_1280));
+    posted.push(currentPost);
 
     var tumblr = new Tumblr(
         {
@@ -86,21 +98,40 @@ function tumblr(image) {
         }, "focircle.tumblr.com"
     );
 
-    var photo = fs.readFileSync(DATAs + '/' + image);
-    var tituName = 'focircle ' + image.slice(0, -4) + '—';
+    var myimage = currentPost.photo_url_1280
 
-    //POST IMAGE AND THEN ADD CAPTION+TAGS
-    tumblr.post('/post', { type: 'photo', data: [photo] }, postedWT);
+    imageDownloader({
+        imgs: [
+            {
+                uri: myimage,
 
-    function postedWT(err, json) {
-        var mpost_id = json.id_string
-        tumblr.post('/post/edit/', { id: mpost_id, caption: tituName, tags: 'focircle,veil,mist,art,visualart,abstract,abstractart,abstractartist,generative,generativeart,fractal,fractalart,procgen,glitch,glitchart,modern,modernart,render,everyday,daily,terragen,aftereffects,dailyrender,digitalart' }, postedMessage);
-    }
+            }
+        ],
+        dest: './data/testdata', //destination folder
+    })
+        .then((info) => {
+            console.log('all done', info);
+            var photo = fs.readFileSync('./data/testdata' + '/' + currentPost.photo_url_1280.split("/").pop());
+            // var tituName = 'focircle ' + image.slice(0, -4) + '—';
 
-    function postedMessage(err, json) {
-        var now = getDateTime()
-        console.log('posted to tumblr: ' + now + " : " + " postid: " + JSON.stringify(json) + " / " + toString(json.short_url));
-    };
+            //POST IMAGE AND THEN ADD CAPTION+TAGS
+            tumblr.post('/post', { type: 'photo', data: [photo] }, postedWT);
+
+            function postedWT(err, json) {
+                console.log("CurrentPost : " + err);
+                var mpost_id = json.id_string
+                tumblr.post('/post/edit/', { id: mpost_id, caption: currentPost.photo_caption, tags: 'focircle,veil,mist,art,visualart,abstract,abstractart,abstractartist,generative,generativeart,fractal,fractalart,procgen,glitch,glitchart,modern,modernart,render,everyday,daily,terragen,aftereffects,dailyrender,digitalart' }, postedMessage);
+            }
+
+            function postedMessage(err, json) {
+                var now = getDateTime()
+                console.log('posted to tumblr: ' + now + " : " + " postid: " + JSON.stringify(json) + " / " + toString(json.short_url));
+            };
+        })
+        .catch((error, response, body) => {
+            console.log('something goes bad!')
+            console.log(error)
+        })
 }
 
 
