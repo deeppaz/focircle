@@ -7,7 +7,7 @@ const imageDownloader = require('node-image-downloader')
 
 var TwitterAPIs = require('./config/twitterApi');
 var TumblrAPIs = require('./config/tumblrApi');
-const postData = require('./data/minimalwhite');
+const postData = require('./data/searchsystem');
 
 
 //CLEAR TERMINAL
@@ -80,7 +80,7 @@ async function twitter(image) {
         
             function uploaded(err, data, response) {
                 var mediaIdStr = data.media_id_string;
-                var params = { status: currentPost.photo_caption, media_ids: [mediaIdStr] }
+                var params = { status: "by " + currentPost.photo_caption.split(/[\(<p></p>\+\(,)\)]+/), media_ids: [mediaIdStr] }
                 T.post('statuses/update', params, tweeted);
             }; 
 
@@ -89,9 +89,10 @@ async function twitter(image) {
                     console.log(err);
                 } else {
                     var now = getDateTime()
+                    var charAyir = currentPost.photo_url_1280.split("/")
                     console.log('posted to twitter: ' + now + ": " + data.text);
                     // MOVE IMAGE TO ANOTHER FOLDER AS
-                    fs.renameSync(DATAs + "/" + image, DATAs + "/postedbefore/" + image);
+                    fs.renameSync('./data/testdata' + "/" + charAyir[4], './data/testdata' + "/postedbefore/" + charAyir[4]);
                 }
             };
         })
@@ -136,7 +137,7 @@ async function tumblr(image) {
             function postedWT(err, json) {
                 console.log("CurrentPost : " + err);
                 var mpost_id = json.id_string
-                tumblr.post('/post/edit/', { id: mpost_id, caption: currentPost.photo_caption, tags: JSON.parse(JSON.stringify(currentPost.tags.toString())) }, postedMessage);
+                tumblr.post('/post/edit/', { id: mpost_id, caption: "by " + currentPost.photo_caption, tags: JSON.parse(JSON.stringify(currentPost.tags.toString())) }, postedMessage);
             }
 
             function postedMessage(err, json) {
