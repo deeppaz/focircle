@@ -2,7 +2,6 @@ var Twit = require('twit');
 var Tumblr = require('tumblrwks');
 var fs = require('fs');
 var DATAs = "./data/theleoisallinthemind.tumblr.com"
-var fetch = require('node-fetch');
 
 const imageDownloader = require('node-image-downloader')
 
@@ -36,7 +35,7 @@ setTimeout(function () { timer() }, midnight);
 //REPEAT EVERY 3 HOURS FROM START TIME
 function timer() {
     summon();
-    setInterval(summon, 3 * 3 * 1000 * 3);
+    setInterval(summon, 60 * 60 * 1000 * 3);
 }
 
 function summon() {
@@ -48,7 +47,10 @@ function summon() {
 
 
 //POST THE IMAGE ON TWITTER
-function twitter(image) {
+async function twitter(image) {
+    var currentPost = readyToPost.pop();
+    posted.push(currentPost);
+
     var T = new Twit(
         {
             consumer_key: TwitterAPIs.TWITTER_CONSUMER_KEY,
@@ -58,35 +60,51 @@ function twitter(image) {
         }
     );
 
-    var tituName = 'post ' + image.slice(0, -4) + ' / #focircle';
-    var b64content = fs.readFileSync(DATAs + '/' + image, { encoding: 'base64' })
+    var myimage = currentPost.photo_url_1280
 
-    T.post('media/upload', { media_data: b64content }, uploaded);
+    imageDownloader({
+        imgs: [
+            {
+                uri: myimage
+            }
+        ],
+        dest: './data/testdata', //destination folder
+    })
+        .then((info) => {
+            console.log('all done in twitter function', info);
+            var photoTwitter = fs.readFileSync('./data/testdata' + '/' + currentPost.photo_url_1280.split("/").pop(), { encoding: 'base64' });
 
-    function uploaded(err, data, response) {
-        var mediaIdStr = data.media_id_string;
-        var params = { status: tituName, media_ids: [mediaIdStr] }
-        T.post('statuses/update', params, tweeted);
-    };
+            // var twittertag = JSON.parse(JSON.stringify(currentPost.tags.toString()));
 
-    function tweeted(err, data, response) {
-        if (err) {
-            console.log(err);
-        } else {
-            var now = getDateTime()
-            console.log('posted to twitter: ' + now + ": " + data.text);
-            // MOVE IMAGE TO ANOTHER FOLDER AS
-            fs.renameSync(DATAs + "/" + image, DATAs + "/postedbefore/" + image);
-        }
-    };
+            T.post('media/upload', { media_data: photoTwitter }, uploaded);
+        
+            function uploaded(err, data, response) {
+                var mediaIdStr = data.media_id_string;
+                var params = { status: currentPost.photo_caption, media_ids: [mediaIdStr] }
+                T.post('statuses/update', params, tweeted);
+            }; 
+
+            function tweeted(err, data, response) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    var now = getDateTime()
+                    console.log('posted to twitter: ' + now + ": " + data.text);
+                    // MOVE IMAGE TO ANOTHER FOLDER AS
+                    fs.renameSync(DATAs + "/" + image, DATAs + "/postedbefore/" + image);
+                }
+            };
+        })
+        .catch((error, response, body) => {
+            console.log('something goes bad in twitter function!')
+            console.log(error)
+        })
 };
 
 
 // POST THE IMAGE ON TUMBLR
 async function tumblr(image) {
     var currentPost = readyToPost.pop();
-    console.log("Current:" + JSON.stringify(currentPost.photo_url_1280));
-    console.log("Tags:" + JSON.parse(JSON.stringify(currentPost.tags.toString())));
     posted.push(currentPost);
 
     var tumblr = new Tumblr(
@@ -109,7 +127,6 @@ async function tumblr(image) {
         dest: './data/testdata', //destination folder
     })
         .then((info) => {
-            console.log('all done', info);
             var photo = fs.readFileSync('./data/testdata' + '/' + currentPost.photo_url_1280.split("/").pop());
             // var tituName = 'focircle ' + image.slice(0, -4) + '—';
 
@@ -128,7 +145,7 @@ async function tumblr(image) {
             };
         })
         .catch((error, response, body) => {
-            console.log('something goes bad!')
+            console.log('something goes bad in tumblr function!')
             console.log(error)
         })
 }
